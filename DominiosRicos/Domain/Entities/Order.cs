@@ -13,7 +13,7 @@ namespace Domain.Entities
         private readonly List<OrderItem> _items = new List<OrderItem>();
 
         public Guid Id { get; private set; }
-        public string? CustomerName { get; private set; }  // Tornando CustomerName anulável
+        public string? CustomerName { get; private set; }
         public OrderStatus Status { get; private set; }
         public IReadOnlyCollection<OrderItem> Items => _items.AsReadOnly();
         public DateTime CreatedAt { get; private set; }
@@ -23,7 +23,7 @@ namespace Domain.Entities
         public Order(string customerName)
         {
             if (string.IsNullOrWhiteSpace(customerName))
-                throw new DomainException("Customer name cannot be empty.");
+                throw new DomainException("Cliente não pode ser vazio.");
 
             CustomerName = customerName;
             Status = OrderStatus.Created;
@@ -33,7 +33,7 @@ namespace Domain.Entities
         public void AddItem(string productName, Money price, int quantity)
         {
             if (Status != OrderStatus.Created)
-                throw new DomainException("You cannot add items to a confirmed order.");
+                throw new DomainException("Você não pode adicionar itens em uma ordem já confirmada.");
 
             _items.Add(new OrderItem(productName, price, quantity));
         }
@@ -46,7 +46,7 @@ namespace Domain.Entities
         public void Confirm()
         {
             if (_items.Count == 0)
-                throw new DomainException("Cannot confirm an empty order.");
+                throw new DomainException("Não é possível confirmar uma ordem vazia.");
 
             Status = OrderStatus.Confirmed;
         }

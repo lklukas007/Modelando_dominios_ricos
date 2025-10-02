@@ -1,7 +1,7 @@
 namespace Domain.Entities
 {
-    using Domain.ValueObjects;  // Para o tipo Money
-    using Domain.Exceptions;    // Para a DomainException
+    using Domain.ValueObjects;
+    using Domain.Exceptions;
 
     public class OrderItem
     {
@@ -14,7 +14,7 @@ namespace Domain.Entities
         public OrderItem(string productName, Money price, int quantity)
         {
             if (quantity <= 0)
-                throw new DomainException("Quantity must be greater than zero.");
+                throw new DomainException("A quantidade deve ser maior que zero.");
 
             ProductName = productName;
             Price = price;
